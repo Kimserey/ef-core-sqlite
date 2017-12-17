@@ -30,7 +30,7 @@ namespace EFTestSqlite.Controllers
             var value = new Value
             {
                 Data = "hello",
-                Tags = new List<string> {
+                Tags = new string[] {
                     "test1",
                     "test2"
                 }

@@ -2,7 +2,6 @@
 
 namespace Library
 {
-
     public class ValueDbContext: DbContext
     {
         public DbSet<Value> Values { get; set; }

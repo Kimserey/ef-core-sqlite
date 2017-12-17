@@ -17,10 +17,13 @@ namespace Library
         public string Data { get; set; }
 
         [NotMapped]
-        public IEnumerable<string> Tags
+        public string[] Tags
         {
             get { return _tags.Split(delimiter); }
-            set { _tags = string.Join($"{delimiter}", value);}
+            set
+            {
+                _tags = string.Join($"{delimiter}", value);
+            }
         }
     }
 }
