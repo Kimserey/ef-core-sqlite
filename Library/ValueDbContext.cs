@@ -16,5 +16,11 @@ namespace Library
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Value>()
+                .Property("_tags");
+        }
     }
 }

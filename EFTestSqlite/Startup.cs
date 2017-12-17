@@ -28,7 +28,7 @@ namespace EFTestSqlite
             services.AddDbContext<ValueDbContext>(options =>
             {
                 options.UseSqlite(
-                    "Data source=values.db", 
+                    "Data source=test.db", 
                     opts => opts.MigrationsAssembly("EFTestSqlite"));
             });
         }

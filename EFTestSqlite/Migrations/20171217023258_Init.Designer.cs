@@ -5,13 +5,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
 namespace EFTestSqlite.Migrations
 {
     [DbContext(typeof(ValueDbContext))]
-    [Migration("20171217010629_Init")]
+    [Migration("20171217023258_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,10 +21,12 @@ namespace EFTestSqlite.Migrations
 
             modelBuilder.Entity("Library.Value", b =>
                 {
-                    b.Property<Guid>("Key")
+                    b.Property<int>("Key")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Data");
+
+                    b.Property<string>("_tags");
 
                     b.HasKey("Key");
 

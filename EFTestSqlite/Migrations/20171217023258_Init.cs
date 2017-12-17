@@ -12,8 +12,10 @@ namespace EFTestSqlite.Migrations
                 name: "Values",
                 columns: table => new
                 {
-                    Key = table.Column<Guid>(nullable: false),
-                    Data = table.Column<string>(nullable: true)
+                    Key = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Data = table.Column<string>(nullable: true),
+                    _tags = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
