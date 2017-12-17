@@ -7,20 +7,13 @@ namespace Library
     {
         public DbSet<Value> Values { get; set; }
 
-        public ValueDbContext()
-        {
-
-        }
-
-        public ValueDbContext(DbContextOptions<ValueDbContext> options): base(options)
-        {
-
-        }
+        public ValueDbContext(DbContextOptions<ValueDbContext> options): base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Value>()
-                .Property("_tags");
+                .Property<string>("Tags")
+                .HasField("_tags");
         }
     }
 }

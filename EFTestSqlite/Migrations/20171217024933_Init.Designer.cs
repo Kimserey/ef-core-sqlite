@@ -10,7 +10,7 @@ using System;
 namespace EFTestSqlite.Migrations
 {
     [DbContext(typeof(ValueDbContext))]
-    [Migration("20171217023258_Init")]
+    [Migration("20171217024933_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace EFTestSqlite.Migrations
 
                     b.Property<string>("Data");
 
-                    b.Property<string>("_tags");
+                    b.Property<string>("Tags");
 
                     b.HasKey("Key");
 

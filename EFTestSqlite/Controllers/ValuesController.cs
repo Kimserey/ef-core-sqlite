@@ -30,8 +30,10 @@ namespace EFTestSqlite.Controllers
             var value = new Value
             {
                 Data = "hello",
-                Tags = new List<string> { "test", "test1" }
             };
+
+            value.AddTag("test1");
+            value.AddTag("test2");
 
             _context.Values.Add(value);
             _context.SaveChanges();

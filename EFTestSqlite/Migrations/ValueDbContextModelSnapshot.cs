@@ -25,7 +25,7 @@ namespace EFTestSqlite.Migrations
 
                     b.Property<string>("Data");
 
-                    b.Property<string>("_tags");
+                    b.Property<string>("Tags");
 
                     b.HasKey("Key");
 

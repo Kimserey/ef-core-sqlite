@@ -16,11 +16,14 @@ namespace Library
 
         public string Data { get; set; }
 
-        [NotMapped]
-        public IEnumerable<string> Tags
+        public IEnumerable<string> GetTags()
         {
-            get { return _tags.Split(delimiter); }
-            set { _tags = string.Join($"{delimiter}", value); }
+            return _tags.Split(delimiter);
+        }
+
+        public void AddTag(string tag)
+        {
+            _tags = _tags + (string.IsNullOrWhiteSpace(_tags) ? "" : delimiter.ToString()) + tag;
         }
     }
 }
