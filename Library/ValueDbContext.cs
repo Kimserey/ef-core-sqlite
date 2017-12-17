@@ -12,7 +12,7 @@ namespace Library
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Value>()
-                .Property<string>("Tags")
+                .Property<string>("TagCollection")
                 .HasField("_tags");
         }
     }
