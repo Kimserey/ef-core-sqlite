@@ -28,6 +28,7 @@ namespace EFTestSqlite.Controllers
                     {
                         id = x.Id,
                         note = x.Text,
+                        key = x.Key,
                         categories = x.NoteCategories.Select(c => new { id = c.Category.Id, name = c.Category.Name })
                     })
             );
@@ -65,6 +66,7 @@ namespace EFTestSqlite.Controllers
                     {
                         id = x.Id,
                         name = x.Name,
+                        key = x.Key,
                         notes = x.NoteCategories.Select(n => new { id = n.Note.Id, text = n.Note.Text })
                     })
             );
