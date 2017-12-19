@@ -10,7 +10,7 @@ using System;
 namespace EFTestSqlite.Migrations
 {
     [DbContext(typeof(ValueDbContext))]
-    [Migration("20171219145159_Init")]
+    [Migration("20171219151359_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

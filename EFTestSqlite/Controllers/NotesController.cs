@@ -128,13 +128,9 @@ namespace EFTestSqlite.Controllers
         [HttpPost("notes/multi")]
         public void AddNoteMulti()
         {
-            var folder = new Folder {
-                Id = 1,
-                Name = "Notes"
-            };
             var notes = Enumerable.Range(0, 10).Select(x => new Note
             {
-                Folder = folder,
+                FolderId = 1,
                 Key = Guid.NewGuid().ToString(),
                 Text = $"test {x}"
             });
