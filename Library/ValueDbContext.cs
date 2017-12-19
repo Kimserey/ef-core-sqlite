@@ -7,7 +7,7 @@ namespace Library
         public DbSet<Value> Values { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<NoteCategory> Link { get; set; }
+        public DbSet<NoteCategory> Links { get; set; }
 
         public ValueDbContext(DbContextOptions<ValueDbContext> options): base(options) { }
 

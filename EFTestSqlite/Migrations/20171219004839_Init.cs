@@ -14,6 +14,7 @@ namespace EFTestSqlite.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    Key = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -27,6 +28,7 @@ namespace EFTestSqlite.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    Key = table.Column<string>(nullable: true),
                     Text = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -49,7 +51,7 @@ namespace EFTestSqlite.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "NoteCategory",
+                name: "Links",
                 columns: table => new
                 {
                     NoteId = table.Column<int>(nullable: false),
@@ -57,15 +59,15 @@ namespace EFTestSqlite.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NoteCategory", x => new { x.NoteId, x.CategoryId });
+                    table.PrimaryKey("PK_Links", x => new { x.NoteId, x.CategoryId });
                     table.ForeignKey(
-                        name: "FK_NoteCategory_Categories_CategoryId",
+                        name: "FK_Links_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_NoteCategory_Notes_NoteId",
+                        name: "FK_Links_Notes_NoteId",
                         column: x => x.NoteId,
                         principalTable: "Notes",
                         principalColumn: "Id",
@@ -73,15 +75,15 @@ namespace EFTestSqlite.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_NoteCategory_CategoryId",
-                table: "NoteCategory",
+                name: "IX_Links_CategoryId",
+                table: "Links",
                 column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "NoteCategory");
+                name: "Links");
 
             migrationBuilder.DropTable(
                 name: "Values");

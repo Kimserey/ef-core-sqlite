@@ -23,6 +23,8 @@ namespace EFTestSqlite.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Key");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
@@ -34,6 +36,8 @@ namespace EFTestSqlite.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Key");
 
                     b.Property<string>("Text");
 
@@ -52,7 +56,7 @@ namespace EFTestSqlite.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("NoteCategory");
+                    b.ToTable("Links");
                 });
 
             modelBuilder.Entity("Library.Value", b =>

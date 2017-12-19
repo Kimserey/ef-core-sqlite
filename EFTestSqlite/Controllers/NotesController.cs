@@ -28,7 +28,7 @@ namespace EFTestSqlite.Controllers
                     {
                         id = x.Id,
                         note = x.Text,
-                        categories = x.NoteCategories.Select(c => c.CategoryId)
+                        categories = x.NoteCategories.Select(c => new { id = c.Category.Id, name = c.Category.Name })
                     })
             );
         }
@@ -36,14 +36,22 @@ namespace EFTestSqlite.Controllers
         [HttpPost]
         public void Post([FromBody]Note note)
         {
+            note.Key = Guid.NewGuid().ToString();
             _context.Notes.Add(note);
             _context.SaveChanges();
         }
 
-        [HttpPost("link")]
-        public void Link([FromBody]NoteCategory link)
+        [HttpPost("links")]
+        public void PostLink([FromBody]NoteCategory link)
         {
-            _context.Link.Add(link);
+            _context.Links.Add(link);
+            _context.SaveChanges();
+        }
+
+        [HttpDelete("links")]
+        public void DeleteLink([FromBody]NoteCategory link)
+        {
+            _context.Links.Remove(link);
             _context.SaveChanges();
         }
 
@@ -52,13 +60,36 @@ namespace EFTestSqlite.Controllers
         {
             return Ok(
                 _context.Categories
+                    .Include(x => x.NoteCategories)
+                    .Select(x => new
+                    {
+                        id = x.Id,
+                        name = x.Name,
+                        notes = x.NoteCategories.Select(n => new { id = n.Note.Id, text = n.Note.Text })
+                    })
             );
         }
 
         [HttpPost("categories")]
         public void Post([FromBody]Category category)
         {
+            category.Key = Guid.NewGuid().ToString();
             _context.Categories.Add(category);
+            _context.SaveChanges();
+        }
+
+        [HttpPut("categories")]
+        public void Put([FromBody]Category category)
+        {
+            _context.Categories.Update(category);
+            _context.SaveChanges();
+        }
+
+        [HttpDelete("categories/{categoryId}")]
+        public void Delete(int categoryId)
+        {
+            var category = _context.Categories.Find(categoryId);
+            _context.Categories.Remove(category);
             _context.SaveChanges();
         }
     }

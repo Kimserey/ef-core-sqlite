@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Library;
+﻿using Library;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace EFTestSqlite
 {
@@ -31,6 +26,10 @@ namespace EFTestSqlite
                     "Data source=test.db", 
                     opts => opts.MigrationsAssembly("EFTestSqlite"));
             });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("api-v1", new Info { Title = "Example API", Version = "v1" });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -40,6 +39,11 @@ namespace EFTestSqlite
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/api-v1/swagger.json", "Example API v1");
+            });
             app.UseMvc();
         }
     }
