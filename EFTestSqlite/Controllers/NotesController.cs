@@ -56,12 +56,28 @@ namespace EFTestSqlite.Controllers
             _context.SaveChanges();
         }
 
+        [HttpGet("categories/int/{categoryId}")]
+        public IActionResult GetCategory(int categoryId)
+        {
+            return Ok(
+                _context.Categories.Find(categoryId)
+            );
+        }
+
+        [HttpGet("categories/guid/{categoryId}")]
+        public IActionResult GetCategoryByGuid([FromRoute]Guid categoryId)
+        {
+            return Ok(
+                _context.Categories
+                    .Single(x => x.Key == categoryId.ToString())
+            );
+        }
+
         [HttpGet("categories")]
         public IActionResult GetCategories()
         {
             return Ok(
                 _context.Categories
-                    .Include(x => x.NoteCategories)
                     .Select(x => new
                     {
                         id = x.Id,
@@ -92,6 +108,18 @@ namespace EFTestSqlite.Controllers
         {
             var category = _context.Categories.Find(categoryId);
             _context.Categories.Remove(category);
+            _context.SaveChanges();
+        }
+
+
+        [HttpDelete("categories/dictionary")]
+        public void DeleteDictionary([FromBody]Guid[] categories)
+        {
+            // Test deletion using dictionary
+            var dict = categories.ToDictionary(x => x.ToString());
+            _context.Categories.RemoveRange(
+                _context.Categories.Where(c => dict.Keys.Contains(c.Key))
+            );
             _context.SaveChanges();
         }
     }
