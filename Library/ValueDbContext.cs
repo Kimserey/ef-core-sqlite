@@ -8,6 +8,7 @@ namespace Library
         public DbSet<Note> Notes { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<NoteCategory> Links { get; set; }
+        public DbSet<Folder> Folders { get; set; }
 
         public ValueDbContext(DbContextOptions<ValueDbContext> options): base(options) { }
 

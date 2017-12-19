@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFTestSqlite.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/notes")]
     public class NotesController : Controller
     {
         private ValueDbContext _context;
@@ -111,16 +111,47 @@ namespace EFTestSqlite.Controllers
             _context.SaveChanges();
         }
 
-
         [HttpDelete("categories/dictionary")]
         public void DeleteDictionary([FromBody]Guid[] categories)
         {
             // Test deletion using dictionary
             var dict = categories.ToDictionary(x => x.ToString());
-            _context.Categories.RemoveRange(
-                _context.Categories.Where(c => dict.Keys.Contains(c.Key))
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                _context.Categories.RemoveRange(
+                    _context.Categories.Where(c => dict.Keys.Contains(c.Key))
+                );
+                _context.SaveChanges();
+            }
+        }
+
+        [HttpPost("notes/multi")]
+        public void AddNoteMulti()
+        {
+            var folder = new Folder {
+                Id = 1,
+                Name = "Notes"
+            };
+            var notes = Enumerable.Range(0, 10).Select(x => new Note
+            {
+                Folder = folder,
+                Key = Guid.NewGuid().ToString(),
+                Text = $"test {x}"
+            });
+
+            _context.AddRange(notes);
+            _context.SaveChanges();
+        }
+
+        [HttpDelete("folders/{folderId}")]
+        public void DeleteFolder(int folderId)
+        {
+            _context.Folders.Remove(
+                _context.Folders
+                    .Single(f => f.Id == folderId)
             );
             _context.SaveChanges();
         }
+
     }
 }

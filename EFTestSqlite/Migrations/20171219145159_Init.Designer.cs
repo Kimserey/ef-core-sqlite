@@ -10,7 +10,7 @@ using System;
 namespace EFTestSqlite.Migrations
 {
     [DbContext(typeof(ValueDbContext))]
-    [Migration("20171219004839_Init")]
+    [Migration("20171219145159_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,16 +33,32 @@ namespace EFTestSqlite.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("Library.Folder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Folders");
+                });
+
             modelBuilder.Entity("Library.Note", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("FolderId");
 
                     b.Property<string>("Key");
 
                     b.Property<string>("Text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FolderId");
 
                     b.ToTable("Notes");
                 });
@@ -72,6 +88,14 @@ namespace EFTestSqlite.Migrations
                     b.HasKey("Key");
 
                     b.ToTable("Values");
+                });
+
+            modelBuilder.Entity("Library.Note", b =>
+                {
+                    b.HasOne("Library.Folder", "Folder")
+                        .WithMany("Notes")
+                        .HasForeignKey("FolderId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Library.NoteCategory", b =>

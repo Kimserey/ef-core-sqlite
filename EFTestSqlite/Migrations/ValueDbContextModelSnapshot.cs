@@ -32,16 +32,32 @@ namespace EFTestSqlite.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("Library.Folder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Folders");
+                });
+
             modelBuilder.Entity("Library.Note", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("FolderId");
 
                     b.Property<string>("Key");
 
                     b.Property<string>("Text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FolderId");
 
                     b.ToTable("Notes");
                 });
@@ -71,6 +87,14 @@ namespace EFTestSqlite.Migrations
                     b.HasKey("Key");
 
                     b.ToTable("Values");
+                });
+
+            modelBuilder.Entity("Library.Note", b =>
+                {
+                    b.HasOne("Library.Folder", "Folder")
+                        .WithMany("Notes")
+                        .HasForeignKey("FolderId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Library.NoteCategory", b =>

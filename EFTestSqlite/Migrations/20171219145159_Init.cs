@@ -23,17 +23,16 @@ namespace EFTestSqlite.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Notes",
+                name: "Folders",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Key = table.Column<string>(nullable: true),
-                    Text = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Notes", x => x.Id);
+                    table.PrimaryKey("PK_Folders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -48,6 +47,27 @@ namespace EFTestSqlite.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Values", x => x.Key);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Notes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    FolderId = table.Column<int>(nullable: false),
+                    Key = table.Column<string>(nullable: true),
+                    Text = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Notes_Folders_FolderId",
+                        column: x => x.FolderId,
+                        principalTable: "Folders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -78,6 +98,11 @@ namespace EFTestSqlite.Migrations
                 name: "IX_Links_CategoryId",
                 table: "Links",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notes_FolderId",
+                table: "Notes",
+                column: "FolderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -93,6 +118,9 @@ namespace EFTestSqlite.Migrations
 
             migrationBuilder.DropTable(
                 name: "Notes");
+
+            migrationBuilder.DropTable(
+                name: "Folders");
         }
     }
 }
