@@ -19,6 +19,8 @@ namespace EFTestSqlite
 
         public void ConfigureServices(IServiceCollection services)
         {
+            
+
             services.AddMvc();
             services.AddDbContext<ValueDbContext>(options =>
             {

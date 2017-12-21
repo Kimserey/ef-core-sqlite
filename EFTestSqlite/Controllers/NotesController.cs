@@ -126,17 +126,18 @@ namespace EFTestSqlite.Controllers
         }
 
         [HttpPost("notes/multi")]
-        public void AddNoteMulti()
+        public IActionResult AddNoteMulti()
         {
             var notes = Enumerable.Range(0, 10).Select(x => new Note
             {
                 FolderId = 1,
                 Key = Guid.NewGuid().ToString(),
                 Text = $"test {x}"
-            });
+            }).ToArray();
 
             _context.AddRange(notes);
             _context.SaveChanges();
+            return Ok(notes);
         }
 
         [HttpDelete("folders/{folderId}")]
